@@ -4,6 +4,9 @@
 namespace App\Services\TelegramServices;
 
 
+use App\Constants\LanguageConstant;
+use App\Constants\MainMenuConstant;
+
 /**
  * Class KeyboardsService
  * @package App\Services\TelegramServices
@@ -18,17 +21,23 @@ class KeyboardsService
         return [
             [
                 [
-                    'text' => __("Вопросы по заявкам"),
+                    'text' => __(MainMenuConstant::VIDEO),
                 ],
                 [
-                    'text' => __("Направить идею по улучшению сервиса"),
+                    'text' => __(MainMenuConstant::PHOTO),
                 ],
             ],
             [
                 [
-                    'text' => __("Изменить язык"),
+                    'text' => __(MainMenuConstant::CONTACT),
                 ],
             ],
+            [
+                [
+                    'text' => __(MainMenuConstant::SETTINGS),
+                    'request_location' => true,
+                ]
+            ]
         ];
     }
 
@@ -40,7 +49,7 @@ class KeyboardsService
         return [
             [
                 [
-                    'text' => __("Поделиться номером"),
+                    'text' => __("Telefon raqam bilan ulashish"),
                     'request_contact' => true,
                 ]
             ]
@@ -79,15 +88,10 @@ class KeyboardsService
         return [
             [
                 [
-                    'text' => trans_choice("Узбекский язык, латиница", 0),
-                ],
-            ],
-            [
-                [
-                    'text' => trans_choice("Узбекский язык, кирилица", 0),
+                    'text' => trans_choice(LanguageConstant::UZ, 0),
                 ],
                 [
-                    'text' => trans_choice("Русский язык", 0),
+                    'text' => trans_choice(LanguageConstant::RU, 0),
                 ],
             ],
         ];

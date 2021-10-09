@@ -5,16 +5,15 @@ namespace App\Services\TelegramServices\Telegram;
 
 use App\Models\Action;
 use App\Models\BotUser;
-use App\Services\TelegramServices\BotActionService;
 use App\Services\TelegramServices\BotUserService;
-use App\Services\TelegramServices\KeyboardsService;
+use App\Services\TelegramServices\TelegramService;
 use Illuminate\Http\Client\RequestException;
 
 /**
  * Class CommandsService
  * @package App\Services\TelegramServices\Telegram
  */
-class CommandsService extends BotActionService
+class CommandsService extends TelegramService
 {
 
     /**

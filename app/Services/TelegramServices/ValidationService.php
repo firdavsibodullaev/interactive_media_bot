@@ -3,6 +3,7 @@
 
 namespace App\Services\TelegramServices;
 
+use App\Constants\LanguageConstant;
 use App\Services\TelegramServices\Telegram\TelegramSettings;
 
 /**
@@ -22,7 +23,7 @@ class ValidationService
         if (
             (preg_match("/[!@#$%^&*()_\-+=\d№;:?\"\s]/", $text)
                 || strlen($text) > 30)
-            || in_array($text, TelegramSettings::langs())
+            || in_array($text, LanguageConstant::translateList())
         ) {
             return false;
         }

@@ -12,37 +12,37 @@ class SubactionsService
     /**
      * Раздел регистрации
      */
-    public const BOT_USER_CREATE = 'bot.user.create';
+    public const REGISTER_CREATE = 'register.create';
 
     /**
      * Раздел получения языка и отправки имени
      */
-    public const BOT_USER_GET_LANG = 'bot.user.get.lang';
+    public const REGISTER_GET_LANGUAGE = 'register.get.language';
 
     /**
      * Раздел получения имени и отправки фамилии
      */
-    public const BOT_USER_ENTER_NAME = 'bot.user.enter.name';
+    public const REGISTER_ENTER_NAME = 'register.enter.name';
 
     /**
      * Раздел получения фамилии и отправки номера телефона
      */
-    public const BOT_USER_ENTER_SURNAME = 'bot.user.enter.surname';
+    public const REGISTER_ENTER_SURNAME = 'register.enter.surname';
 
     /**
      * Раздел получения номера телефона
      */
-    public const BOT_USER_GET_PHONE = 'bot.user.get.phone';
+    public const REGISTER_SEND_PHONE = 'register.send.phone';
 
     /**
      * Раздел получения организации
      */
-    public const BOT_USER_GET_ORGANIZATION = 'bot.user.get.organization';
+    public const REGISTER_GET_ORGANIZATION = 'register.get.organization';
 
     /**
      * Раздел получения должности
      */
-    public const BOT_USER_GET_POST = 'bot.user.get.post';
+    public const REGISTER_GET_POST = 'register.get.post';
 
     /**
      * Раздел для отправки текста
