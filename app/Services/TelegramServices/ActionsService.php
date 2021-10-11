@@ -18,4 +18,14 @@ class ActionsService
     /** string */
     public const CONTACT = 'contact';
 
+    /** string */
+    public const VIDEO = 'video';
+
+    public const PHOTO = 'photo';
+
+    public const BOT_CONTROL = 'bot.control';
+
+    public const CONTACT_EDIT = 'bot.edit';
+
+    public const LOCATION = 'location';
 }

@@ -2,7 +2,7 @@
 
 namespace App\Services\TelegramServices;
 
-use App\Constants\MainMenuConstant;
+use App\Models\Message;
 use Illuminate\Http\Client\RequestException;
 
 /**
@@ -21,11 +21,16 @@ class ClientActionService extends TelegramService
             return;
         }
 
+        $this->deleteMessage();
+
         $this->start();
 
         $this->actions();
     }
 
+    /**
+     * @throws RequestException
+     */
     public function start()
     {
         if ($this->text === '/start') {
@@ -41,29 +46,5 @@ class ClientActionService extends TelegramService
         if (!$this->bot_user->status) {
             (new RegisterService($this->telegram, $this->updates))->index();
         }
-    }
-
-    /**
-     * @throws RequestException
-     */
-    private function actions()
-    {
-        if ($this->isAction('contact')) {
-            (new ContactService($this->telegram, $this->updates))->index();
-        }
-    }
-
-
-    /**
-     * @param string $action
-     * @return bool
-     */
-    private function isAction(string $action): bool
-    {
-        return [
-            'contact' => ($this->text === __(MainMenuConstant::CONTACT)),
-            'video' => ($this->text === __(MainMenuConstant::VIDEO)),
-            'photo' => ($this->text === __(MainMenuConstant::PHOTO)),
-        ][$action];
     }
 }

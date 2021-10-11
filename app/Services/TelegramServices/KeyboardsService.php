@@ -6,6 +6,7 @@ namespace App\Services\TelegramServices;
 
 use App\Constants\LanguageConstant;
 use App\Constants\MainMenuConstant;
+use App\Constants\UserRoleConstant;
 
 /**
  * Class KeyboardsService
@@ -14,11 +15,12 @@ use App\Constants\MainMenuConstant;
 class KeyboardsService
 {
     /**
+     * @param string|null $role
      * @return array
      */
-    public static function mainButtons(): array
+    public static function mainButtons(?string $role = null): array
     {
-        return [
+        $button = [
             [
                 [
                     'text' => __(MainMenuConstant::VIDEO),
@@ -31,14 +33,25 @@ class KeyboardsService
                 [
                     'text' => __(MainMenuConstant::CONTACT),
                 ],
+                [
+                    'text' => __(MainMenuConstant::LOCATION),
+                ],
             ],
             [
                 [
                     'text' => __(MainMenuConstant::SETTINGS),
                     'request_location' => true,
-                ]
-            ]
+                ],
+            ],
         ];
+        if ($role) {
+            array_push($button, [
+                [
+                    'text' => __(MainMenuConstant::BOT_CONTROL),
+                ]
+            ]);
+        }
+        return $button;
     }
 
     /**
@@ -83,6 +96,9 @@ class KeyboardsService
         ];
     }
 
+    /**
+     * @return \array[][]
+     */
     public static function languagesButtons(): array
     {
         return [
@@ -184,6 +200,25 @@ class KeyboardsService
                     'text' => __("Назад")
                 ],
             ]
+        ];
+    }
+
+    public static function controlSettingsButtons()
+    {
+        return [
+            [
+                [
+                    'text' => __('Videoni o\'zgartirish')
+                ],
+                [
+                    'text' => __('Rasmni o\'zgartirish')
+                ],
+            ],
+            [
+                [
+                    'text' => __('Kontakni o\'zgartirish'),
+                ],
+            ],
         ];
     }
 }

@@ -5,9 +5,13 @@ namespace App\Services\TelegramServices;
 use App\Constants\UserRoleConstant;
 use App\Models\Action;
 use App\Models\BotUser;
+use App\Models\Message;
 use App\Services\TelegramServices\Telegram\Api;
 use App\Services\TelegramServices\Telegram\WebhookUpdates;
+use App\ServiceTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\Client\Response;
 
 /**
  * Class TelegramService
@@ -15,6 +19,8 @@ use Illuminate\Http\Client\RequestException;
  */
 class TelegramService
 {
+    use ServiceTrait;
+
     /**
      * @var WebhookUpdates
      */
@@ -106,15 +112,60 @@ class TelegramService
         $this->action->save();
     }
 
-    public function sendMainMenu()
+    /**
+     * @param string|null $role
+     * @return array|Response
+     * @throws RequestException
+     */
+    public function sendMainMenu(?string $role = null)
     {
         return $this->telegram->send('sendMessage', [
             'chat_id' => $this->chat_id,
             'text' => __('Bo\'limni tanlang'),
             'reply_markup' => json_encode([
-                'keyboard' => KeyboardsService::mainButtons(),
+                'keyboard' => KeyboardsService::mainButtons($role),
                 'resize_keyboard' => true,
             ])
         ]);
+    }
+
+    public function saveMessage($message)
+    {
+        $now = now();
+        $array = [
+            [
+                'message_id' => $message['result']['message_id'],
+                'chat_id' => $this->chat_id,
+                'created_at' => $now,
+            ],
+        ];
+        if ($message_id = $this->updates->getMessageId()) {
+            array_push($array,
+                [
+                    'message_id' => $message_id,
+                    'chat_id' => $this->chat_id,
+                    'created_at' => $now,
+                ]);
+        }
+
+        Message::query()->insert($array);
+    }
+
+
+    /**
+     * @throws RequestException
+     */
+    public function deleteMessage()
+    {
+        $messages = Message::query()->where('chat_id', '=', $this->chat_id)->get();
+        foreach ($messages as $message) {
+            if (time() - $message->created_at->timestamp < 60 * 60 * 24 * 2) {
+                $this->telegram->send('deleteMessage', [
+                    'chat_id' => $this->chat_id,
+                    'message_id' => $message->message_id
+                ]);
+            }
+            $message->delete();
+        }
     }
 }

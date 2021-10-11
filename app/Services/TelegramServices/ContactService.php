@@ -3,6 +3,7 @@
 namespace App\Services\TelegramServices;
 
 use App\Models\Contact;
+use Illuminate\Http\Client\RequestException;
 
 /**
  * Class ContactService
@@ -10,22 +11,20 @@ use App\Models\Contact;
  */
 class ContactService extends TelegramService
 {
+    /**
+     * @throws RequestException
+     */
     public function index()
     {
         $contact = Contact::query()->get();
 
-        $this->telegram->send('sendMessage', [
+        $message = $this->telegram->send('sendMessage', [
             'chat_id' => $this->chat_id,
             'text' => $this->getText($contact),
             'parse_mode' => 'html',
         ]);
 
-        $coordinates = json_decode($contact->where('name', 'location')->first()->value, true);
-        $this->telegram->send('sendLocation', [
-            'chat_id' => $this->chat_id,
-            'latitude' => $coordinates['latitude'],
-            'longitude' => $coordinates['longitude'],
-        ]);
+        $this->saveMessage($message);
 
     }
 

@@ -65,4 +65,9 @@ class SubactionsService
      */
     public const SET_LANGUAGE = 'set.language';
 
+    /**
+     * Раздел для настроек бота
+     */
+    public const CONTACT_EDIT_INDEX = 'contact.edit.index';
+
 }

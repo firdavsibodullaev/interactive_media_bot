@@ -6,19 +6,14 @@ namespace App\Constants;
 
 use Illuminate\Support\Arr;
 
-class MainMenuConstant
+class BotControlSettingsConstant
 {
-    const CONTACT = 'contact';
 
-    const LOCATION = 'location';
+    const VIDEO_EDIT = 'video edit';
 
-    const VIDEO = 'video';
+    const PHOTO_EDIT = 'photo edit';
 
-    const PHOTO = 'photo';
-
-    const SETTINGS = 'settings';
-
-    const BOT_CONTROL = 'control';
+    const CONTACT_EDIT = 'contact edit';
 
     /**
      * @return string[]
@@ -26,12 +21,9 @@ class MainMenuConstant
     public static function list(): array
     {
         return [
-            self::CONTACT,
-            self::LOCATION,
-            self::VIDEO,
-            self::PHOTO,
-            self::SETTINGS,
-            self::BOT_CONTROL
+            self::VIDEO_EDIT,
+            self::PHOTO_EDIT,
+            self::CONTACT_EDIT,
         ];
     }
 
