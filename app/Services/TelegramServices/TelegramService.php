@@ -108,6 +108,7 @@ class TelegramService
     public function setActionNull()
     {
         $this->action->action = null;
+        $this->action->action_1 = null;
         $this->action->sub_action = null;
         $this->action->save();
     }

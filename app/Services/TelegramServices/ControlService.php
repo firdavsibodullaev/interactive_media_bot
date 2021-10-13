@@ -5,6 +5,8 @@ namespace App\Services\TelegramServices;
 use App\Constants\ControlActionsConstant;
 use App\Constants\UserRoleConstant;
 use App\Services\ActionOneService;
+use App\Services\PhotoSettingsService;
+use App\Services\VideoSettingsService;
 use Illuminate\Http\Client\RequestException;
 
 /**
@@ -59,6 +61,12 @@ class ControlService extends TelegramService
                 case ControlActionsConstant::EDIT_CONTACT:
                     (new ContactSettingsService($this->telegram, $this->updates))->index();
                     break;
+                case ControlActionsConstant::EDIT_VIDEO:
+                    (new VideoSettingsService($this->telegram, $this->updates))->index();
+                    break;
+                case ControlActionsConstant::EDIT_PHOTO:
+                    (new PhotoSettingsService($this->telegram, $this->updates))->index();
+                    break;
             }
             return;
         }
@@ -67,6 +75,12 @@ class ControlService extends TelegramService
         switch ($this->action->action_1) {
             case ActionOneService::CONTACT_EDIT:
                 (new ContactSettingsService($this->telegram, $this->updates))->index();
+                break;
+            case ActionOneService::VIDEO_EDIT:
+                (new VideoSettingsService($this->telegram, $this->updates))->index();
+                break;
+            case ActionOneService::PHOTO_EDIT:
+                (new PhotoSettingsService($this->telegram, $this->updates))->index();
                 break;
         }
     }

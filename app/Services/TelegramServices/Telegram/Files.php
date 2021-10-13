@@ -36,14 +36,8 @@ class Files
             if ($size >= 0 && $size <= 2) {
                 if (isset($this->update["message"]["photo"][$size]))
                     return $this->update["message"]["photo"][$size];
-                elseif (isset($this->update["message"]["photo"][2]))
-                    return $this->update["message"]["photo"][2];
-                elseif (isset($this->update["message"]["photo"][1]))
-                    return $this->update["message"]["photo"][1];
-                elseif (isset($this->update["message"]["photo"][0]))
-                    return $this->update["message"]["photo"][0];
                 else
-                    return $this->update["message"]["photo"];
+                    return end($this->update["message"]["photo"]);
             } else
                 die();
         }
@@ -55,7 +49,12 @@ class Files
      */
     public function getAudio()
     {
-        return isset($this->update["message"]["audio"]) ? $this->update["message"]["audio"] : false;
+        return $this->update["message"]["audio"] ?? false;
+    }
+
+    public function getVideo()
+    {
+        return $this->update["message"]["video"] ?? false;
     }
 
     /**

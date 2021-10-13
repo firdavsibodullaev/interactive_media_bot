@@ -31,6 +31,30 @@ class ValidationService
     }
 
     /**
+     * @param array $video
+     * @return bool
+     */
+    public static function validateVideo(array $video): bool
+    {
+        if (explode('/', $video['mime_type'])[0] !== 'video') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param array $video
+     * @return bool
+     */
+    public static function validatePhoto(array $video): bool
+    {
+        if (explode('/', $video['mime_type'])[0] !== 'video') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * @param string $text
      * @param bool $is_contact
      * @return bool

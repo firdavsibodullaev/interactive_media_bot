@@ -7,7 +7,9 @@ namespace App\Services\TelegramServices;
 use App\Constants\ControlActionsConstant;
 use App\Constants\LanguageConstant;
 use App\Constants\MainMenuConstant;
+use App\Constants\MediaTypesConstant;
 use App\Constants\UserRoleConstant;
+use App\Models\Category;
 
 /**
  * Class KeyboardsService
@@ -91,33 +93,6 @@ class KeyboardsService
         ];
     }
 
-
-    /**
-     * @param string $lang
-     * @return array
-     */
-    public static function inlineLanguagesButton(string $lang): array
-    {
-        return [
-            [
-                [
-                    'text' => ($lang == "uz") ? trans_choice("Узбекский язык, латиница", 1) : trans_choice("Узбекский язык, латиница", 0),
-                ],
-                [
-                    'text' => ($lang == "ru") ? trans_choice("Русский язык", 1) : trans_choice("Русский язык", 0),
-                ],
-                [
-                    'text' => ($lang == "oz") ? trans_choice("Узбекский язык, кирилица", 1) : trans_choice("Узбекский язык, кирилица", 0),
-                ],
-            ],
-            [
-                [
-                    'text' => __("Назад"),
-                ]
-            ],
-        ];
-    }
-
     /**
      * @return \array[][]
      */
@@ -138,31 +113,6 @@ class KeyboardsService
     /**
      * @return array
      */
-    public static function settingsButtons(): array
-    {
-        return [
-            [
-                [
-                    'text' => __("Tilni o'zgartirish"),
-                    'callback_data' => "change_language"
-                ],
-                [
-                    'text' => __("Akkauntni o'chirish"),
-                    'callback_data' => "delete_account"
-                ]
-            ],
-            [
-                [
-                    'text' => __("Sozlamalardan chiqish"),
-                    'callback_data' => "exit_settings"
-                ]
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
     public static function returnBackButton(): array
     {
         return [
@@ -170,57 +120,6 @@ class KeyboardsService
                 [
                     'text' => __(ControlActionsConstant::BACK),
                 ]
-            ]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function sendRequestOrReturnBack(): array
-    {
-        return [
-            [
-                [
-                    'text' => __("Отправить"),
-                ]
-            ],
-            [
-                [
-                    'text' => __("Назад"),
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function finishButton(): array
-    {
-        return [
-            [
-                [
-                    'text' => __("Закончить"),
-                    'callback_data' => 'finish'
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function skipOrCancel(): array
-    {
-        return [
-            [
-                [
-                    'text' => __("Пропустить")
-                ],
-                [
-                    'text' => __("Назад")
-                ],
             ]
         ];
     }
@@ -286,4 +185,28 @@ class KeyboardsService
         ];
     }
 
+    /**
+     * @return array
+     */
+    public static function getCategoriesList(string $type = MediaTypesConstant::VIDEO): array
+    {
+        $categories = Category::query()
+            ->where('type', '=', $type)
+            ->pluck("name_" . app()->getLocale())
+            ->toArray();
+        $array_list = [];
+        $temp = [];
+        foreach ($categories as $key => $category) {
+            array_push($temp, [
+                'text' => $category
+            ]);
+            if ($key % 2 == 1 || sizeof($categories) - 1 === $key) {
+                array_push($array_list, $temp);
+                $temp = [];
+            }
+        }
+        array_push($array_list, [self::returnBackButton()[0][0]]);
+
+        return $array_list;
+    }
 }

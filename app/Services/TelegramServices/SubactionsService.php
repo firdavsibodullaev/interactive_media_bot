@@ -35,16 +35,6 @@ class SubactionsService
     public const REGISTER_SEND_PHONE = 'register.send.phone';
 
     /**
-     * Раздел получения организации
-     */
-    public const REGISTER_GET_ORGANIZATION = 'register.get.organization';
-
-    /**
-     * Раздел получения должности
-     */
-    public const REGISTER_GET_POST = 'register.get.post';
-
-    /**
      * Раздел для отправки текста
      */
     public const ENTER_TEXT = 'enter.text';
@@ -82,5 +72,9 @@ class SubactionsService
     public const EDIT_CONTACT_GET_PHONE = 'get.contact.get.phone';
 
     public const EDIT_CONTACT_GET_LOCATION = 'get.contact.get.location';
+
+    public const GET_MEDIA = 'get.media';
+
+    public const GET_MEDIA_CATEGORY = 'get.media.category';
 
 }
