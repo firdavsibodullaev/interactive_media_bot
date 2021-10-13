@@ -32,7 +32,7 @@ class ContactService extends TelegramService
     public function getText($contact): string
     {
         return "<strong>" . __("Bizning ma'lumotlar") . "</strong>"
-            . PHP_EOL . PHP_EOL . "<strong>" . __('Kontakt') . ":</strong> {$contact->where('name', 'phone')->first()->value}"
+            . PHP_EOL . PHP_EOL . "<strong>" . __('Kontakt') . ":</strong> +{$contact->where('name', 'phone')->first()->value}"
             . PHP_EOL . "<strong>" . __("Telegram") . ":</strong> <a href='{$contact->where('name', 'telegram')->first()->value}'>Havola</a>"
             . PHP_EOL . "<strong>" . __("Instagram") . ":</strong> <a href='{$contact->where('name', 'instagram')->first()->value}'>Havola</a>";
     }
