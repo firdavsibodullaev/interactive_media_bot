@@ -237,7 +237,9 @@ class WebhookUpdates
      */
     public function getContact(): ?string
     {
-        return $this->isContact() ? $this->update["message"]["contact"]["phone_number"] : $this->getText();
+        return $this->isContact()
+            ? preg_replace('/\+/', '', $this->update["message"]["contact"]["phone_number"])
+            : $this->getText();
     }
 
     /**
@@ -286,6 +288,14 @@ class WebhookUpdates
     }
 
     /**
+     * @return bool
+     */
+    public function isLocation(): bool
+    {
+        return isset($this->update['message']['location']);
+    }
+
+    /**
      * @return int
      */
     public function getMessageId(): int
@@ -294,5 +304,16 @@ class WebhookUpdates
             return $this->update['edited_message']['message_id'];
         }
         return $this->update['message']['message_id'];
+    }
+
+    public function getLocation()
+    {
+        if ($this->isEditedMessage()) {
+            return $this->getText();
+        }
+        if (!$this->isLocation()) {
+            return $this->getText();
+        }
+        return $this->update['message']['location'];
     }
 }

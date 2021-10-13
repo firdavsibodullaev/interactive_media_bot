@@ -2,6 +2,7 @@
 
 namespace App\Services\TelegramServices;
 
+use App\Constants\UserRoleConstant;
 use Illuminate\Http\Client\RequestException;
 
 /**
@@ -12,7 +13,11 @@ class AdminActionService extends TelegramService
 {
     public function index()
     {
+        $this->deleteMessage();
+
         $this->start();
+
+        $this->actions();
     }
 
     /**
@@ -21,9 +26,8 @@ class AdminActionService extends TelegramService
     public function start()
     {
         if ($this->text === '/start') {
-            $this->sendMainMenu('role');
+            $this->sendMainMenu(UserRoleConstant::ADMIN);
         }
 
-        $this->actions();
     }
 }

@@ -4,6 +4,7 @@
 namespace App\Services\TelegramServices;
 
 
+use App\Constants\ControlActionsConstant;
 use App\Constants\LanguageConstant;
 use App\Constants\MainMenuConstant;
 use App\Constants\UserRoleConstant;
@@ -44,7 +45,7 @@ class KeyboardsService
                 ],
             ],
         ];
-        if ($role) {
+        if ($role === UserRoleConstant::ADMIN) {
             array_push($button, [
                 [
                     'text' => __(MainMenuConstant::BOT_CONTROL),
@@ -66,6 +67,27 @@ class KeyboardsService
                     'request_contact' => true,
                 ]
             ]
+        ];
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function phoneNumberOrBackButton(): array
+    {
+        return [
+            [
+                [
+                    'text' => __("Telefon raqam bilan ulashish"),
+                    'request_contact' => true,
+                ]
+            ],
+            [
+                [
+                    'text' => __(ControlActionsConstant::BACK),
+                ]
+            ],
         ];
     }
 
@@ -146,7 +168,7 @@ class KeyboardsService
         return [
             [
                 [
-                    'text' => __("Назад"),
+                    'text' => __(ControlActionsConstant::BACK),
                 ]
             ]
         ];
@@ -203,22 +225,65 @@ class KeyboardsService
         ];
     }
 
-    public static function controlSettingsButtons()
+    /**
+     * @return \array[][]
+     */
+    public static function controlSettingsButtons(): array
     {
         return [
             [
                 [
-                    'text' => __('Videoni o\'zgartirish')
+                    'text' => __(ControlActionsConstant::EDIT_VIDEO)
                 ],
                 [
-                    'text' => __('Rasmni o\'zgartirish')
+                    'text' => __(ControlActionsConstant::EDIT_PHOTO)
                 ],
             ],
             [
                 [
-                    'text' => __('Kontakni o\'zgartirish'),
+                    'text' => __(ControlActionsConstant::EDIT_CONTACT),
+                ],
+            ],
+            [
+                [
+                    'text' => __(ControlActionsConstant::BACK),
                 ],
             ],
         ];
     }
+
+    /**
+     * @return \array[][]
+     */
+    public static function sendContactEditButtons(): array
+    {
+        return [
+            [
+                [
+                    'text' => __(ControlActionsConstant::EDIT_PHONE),
+                    'callback_data' => ControlActionsConstant::EDIT_PHONE,
+                ],
+                [
+                    'text' => __(ControlActionsConstant::EDIT_INSTAGRAM),
+                    'callback_data' => ControlActionsConstant::EDIT_INSTAGRAM,
+                ],
+            ],
+            [
+                [
+                    'text' => __(ControlActionsConstant::EDIT_TELEGRAM),
+                    'callback_data' => ControlActionsConstant::EDIT_TELEGRAM,
+                ],
+                [
+                    'text' => __(ControlActionsConstant::EDIT_LOCATION),
+                    'callback_data' => ControlActionsConstant::EDIT_LOCATION,
+                ],
+            ],
+            [
+                [
+                    'text' => ControlActionsConstant::BACK,
+                ]
+            ]
+        ];
+    }
+
 }

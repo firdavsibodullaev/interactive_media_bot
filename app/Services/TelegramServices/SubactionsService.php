@@ -70,4 +70,17 @@ class SubactionsService
      */
     public const CONTACT_EDIT_INDEX = 'contact.edit.index';
 
+    /**  */
+    public const GET_MAIN_BUTTONS = 'get.main.buttons';
+
+    public const GET_CONTACT_EDIT_ACTION = 'get.contact.edit.action';
+
+    public const EDIT_CONTACT_GET_INSTAGRAM = 'get.contact.get.instagram';
+
+    public const EDIT_CONTACT_GET_TELEGRAM = 'get.contact.get.telegram';
+
+    public const EDIT_CONTACT_GET_PHONE = 'get.contact.get.phone';
+
+    public const EDIT_CONTACT_GET_LOCATION = 'get.contact.get.location';
+
 }

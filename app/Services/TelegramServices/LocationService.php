@@ -3,7 +3,6 @@
 namespace App\Services\TelegramServices;
 
 use App\Models\Contact;
-use App\Models\Message;
 use Illuminate\Http\Client\RequestException;
 
 /**
@@ -12,6 +11,9 @@ use Illuminate\Http\Client\RequestException;
  */
 class LocationService extends TelegramService
 {
+    /**
+     * @throws RequestException
+     */
     public function index()
     {
         $contact = Contact::query()->get();

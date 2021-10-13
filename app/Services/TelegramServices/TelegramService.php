@@ -119,6 +119,7 @@ class TelegramService
      */
     public function sendMainMenu(?string $role = null)
     {
+        $this->setActionNull();
         return $this->telegram->send('sendMessage', [
             'chat_id' => $this->chat_id,
             'text' => __('Bo\'limni tanlang'),
