@@ -127,8 +127,6 @@ class RegisterService extends TelegramService
         $this->bot_user->status = true;
         $this->bot_user->save();
 
-        $this->setActionNull();
-
         $this->sendMainMenu();
     }
 

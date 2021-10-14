@@ -9,6 +9,8 @@ use App\Services\TelegramServices\ActionsService;
 use App\Services\TelegramServices\ContactService;
 use App\Services\TelegramServices\ControlService;
 use App\Services\TelegramServices\LocationService;
+use App\Services\TelegramServices\PhotoService;
+use App\Services\TelegramServices\VideoService;
 use Illuminate\Http\Client\RequestException;
 
 trait ServiceTrait
@@ -23,6 +25,10 @@ trait ServiceTrait
             (new ContactService($this->telegram, $this->updates))->index();
         } elseif ($this->isAction(MainMenuConstant::LOCATION)) {
             (new LocationService($this->telegram, $this->updates))->index();
+        } elseif ($this->isAction(MainMenuConstant::VIDEO)) {
+            (new VideoService($this->telegram, $this->updates))->index();
+        } elseif ($this->isAction(MainMenuConstant::PHOTO)) {
+            (new PhotoService($this->telegram, $this->updates))->index();
         }
         if ($this->bot_user->role === UserRoleConstant::ADMIN) {
             if ($this->isAction(MainMenuConstant::BOT_CONTROL)) {

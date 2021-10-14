@@ -10,6 +10,7 @@ use App\Constants\MainMenuConstant;
 use App\Constants\MediaTypesConstant;
 use App\Constants\UserRoleConstant;
 use App\Models\Category;
+use App\Models\Media;
 
 /**
  * Class KeyboardsService
@@ -119,6 +120,7 @@ class KeyboardsService
             [
                 [
                     'text' => __(ControlActionsConstant::BACK),
+                    'callback_data' => 'back',
                 ]
             ]
         ];
@@ -186,6 +188,7 @@ class KeyboardsService
     }
 
     /**
+     * @param string $type
      * @return array
      */
     public static function getCategoriesList(string $type = MediaTypesConstant::VIDEO): array
@@ -198,7 +201,8 @@ class KeyboardsService
         $temp = [];
         foreach ($categories as $key => $category) {
             array_push($temp, [
-                'text' => $category
+                'text' => $category,
+                'callback_data' => "{$type}_1"
             ]);
             if ($key % 2 == 1 || sizeof($categories) - 1 === $key) {
                 array_push($array_list, $temp);
@@ -208,5 +212,24 @@ class KeyboardsService
         array_push($array_list, [self::returnBackButton()[0][0]]);
 
         return $array_list;
+    }
+
+    public static function attachLabel(Media $media): array
+    {
+        $prev = $media->prev($media->type) ? $media->prev($media->type)->id : "";
+        $next = $media->next($media->type) ? $media->next($media->type)->id : "";
+//        $return
+        return [
+            [
+                [
+                    'text' => __('prev'),
+                    'callback_data' => "media_{$prev}"
+                ],
+                [
+                    'text' => __('next'),
+                    'callback_data' => "media_{$next}"
+                ],
+            ]
+        ];
     }
 }

@@ -26,7 +26,7 @@ class AdminActionService extends TelegramService
     public function start()
     {
         if ($this->text === '/start') {
-            $this->sendMainMenu(UserRoleConstant::ADMIN);
+            $this->sendMainMenu();
         }
 
     }

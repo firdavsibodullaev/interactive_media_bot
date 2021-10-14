@@ -303,6 +303,9 @@ class WebhookUpdates
         if ($this->isEditedMessage()) {
             return $this->update['edited_message']['message_id'];
         }
+        if ($this->callbackQuery()) {
+            return $this->update['callback_query']['message']['message_id'];
+        }
         return $this->update['message']['message_id'];
     }
 

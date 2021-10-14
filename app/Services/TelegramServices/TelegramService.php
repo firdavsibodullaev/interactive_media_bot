@@ -114,12 +114,12 @@ class TelegramService
     }
 
     /**
-     * @param string|null $role
      * @return array|Response
      * @throws RequestException
      */
-    public function sendMainMenu(?string $role = null)
+    public function sendMainMenu()
     {
+        $role = $this->bot_user->role;
         $this->setActionNull();
         return $this->telegram->send('sendMessage', [
             'chat_id' => $this->chat_id,
@@ -159,6 +159,9 @@ class TelegramService
      */
     public function deleteMessage()
     {
+        if ($this->updates->callbackQuery()) {
+            return;
+        }
         $messages = Message::query()->where('chat_id', '=', $this->chat_id)->get();
         foreach ($messages as $message) {
             if (time() - $message->created_at->timestamp < 60 * 60 * 24 * 2) {

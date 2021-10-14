@@ -56,7 +56,7 @@ class ControlService extends TelegramService
         if (!$this->action->action_1) {
             switch (ControlActionsConstant::getKey($this->text)) {
                 case ControlActionsConstant::BACK:
-                    $this->sendMainMenu(UserRoleConstant::ADMIN);
+                    $this->sendMainMenu();
                     break;
                 case ControlActionsConstant::EDIT_CONTACT:
                     (new ContactSettingsService($this->telegram, $this->updates))->index();

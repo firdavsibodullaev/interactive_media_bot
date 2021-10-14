@@ -77,4 +77,6 @@ class SubactionsService
 
     public const GET_MEDIA_CATEGORY = 'get.media.category';
 
+    public const SET_MEDIA_CATEGORY = 'set.media.category';
+
 }
