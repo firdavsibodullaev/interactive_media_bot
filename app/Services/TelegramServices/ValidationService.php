@@ -3,6 +3,7 @@
 
 namespace App\Services\TelegramServices;
 
+use App\Constants\LanguageConstant;
 use App\Services\TelegramServices\Telegram\TelegramSettings;
 
 /**
@@ -22,8 +23,32 @@ class ValidationService
         if (
             (preg_match("/[!@#$%^&*()_\-+=\d№;:?\"\s]/", $text)
                 || strlen($text) > 30)
-            || in_array($text, TelegramSettings::langs())
+            || in_array($text, LanguageConstant::translateList())
         ) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param array $video
+     * @return bool
+     */
+    public static function validateVideo(array $video): bool
+    {
+        if (explode('/', $video['mime_type'])[0] !== 'video') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param array $video
+     * @return bool
+     */
+    public static function validatePhoto(array $video): bool
+    {
+        if (explode('/', $video['mime_type'])[0] !== 'video') {
             return false;
         }
         return true;
