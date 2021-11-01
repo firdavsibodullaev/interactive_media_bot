@@ -216,9 +216,8 @@ class KeyboardsService
 
     public static function attachLabel(Media $media): array
     {
-        $prev = $media->prev($media->type) ? $media->prev($media->type)->id : "";
-        $next = $media->next($media->type) ? $media->next($media->type)->id : "";
-//        $return
+        $prev = $media->prev($media) ? $media->prev($media)->id : "";
+        $next = $media->next($media) ? $media->next($media)->id : "";
         return [
             [
                 [
