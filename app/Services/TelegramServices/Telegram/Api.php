@@ -68,13 +68,13 @@ class Api
      * @return Response|array
      * @throws RequestException
      */
-    public function send(string $method, array $params = [])
+    public function send(string $method, array $params = [], bool $with_errors = false)
     {
         if ($method && !empty($params)) {
             $url = str_replace('{method}', $method, $this->url);
             $response = Http::get($url, $params);
             /** @var object $response */
-            if ($response->ok()) {
+            if ($response->ok() || $with_errors) {
                 return $response->json();
             }
             $this->send("sendMessage", [

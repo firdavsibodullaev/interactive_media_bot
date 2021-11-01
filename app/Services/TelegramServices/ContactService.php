@@ -22,6 +22,7 @@ class ContactService extends TelegramService
             'chat_id' => $this->chat_id,
             'text' => $this->getText($contact),
             'parse_mode' => 'html',
+            'disable_web_page_preview' => true,
         ]);
 
         $this->saveMessage($message);

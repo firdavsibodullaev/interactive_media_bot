@@ -9,25 +9,27 @@ class Media extends BaseModel
     use SoftDeletes;
 
     /**
-     * @param string $type
+     * @param Media $media
      * @return mixed
      */
-    public function next(string $type)
+    public function next(Media $media)
     {
-        return static::where('type', '=', $type)
+        return static::where('type', '=', $media->type)
             ->where('id', '>', $this->id)
+            ->where('category_id', '=', $media->category_id)
             ->orderBy('id', 'asc')
             ->first();
     }
 
     /**
-     * @param string $type
+     * @param Media $media
      * @return mixed
      */
-    public function prev(string $type)
+    public function prev(Media $media)
     {
-        return static::where('type', '=', $type)
+        return static::where('type', '=', $media->type)
             ->where('id', '<', $this->id)
+            ->where('category_id', '=', $media->category_id)
             ->orderBy('id', 'desc')
             ->first();
     }

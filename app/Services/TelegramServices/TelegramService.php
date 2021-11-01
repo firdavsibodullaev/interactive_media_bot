@@ -9,7 +9,6 @@ use App\Models\Message;
 use App\Services\TelegramServices\Telegram\Api;
 use App\Services\TelegramServices\Telegram\WebhookUpdates;
 use App\ServiceTrait;
-use Carbon\Carbon;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response;
 
@@ -63,6 +62,7 @@ class TelegramService
      */
     public function index()
     {
+        $this->checkChatMember();
         if ($this->bot_user->role === UserRoleConstant::ADMIN) {
             (new AdminActionService($this->telegram, $this->updates))->index();
         } else {
@@ -169,8 +169,30 @@ class TelegramService
                     'chat_id' => $this->chat_id,
                     'message_id' => $message->message_id
                 ]);
+            } else {
+                $this->telegram->send('editMessageReplyMarkup', [
+                    'chat_id' => $this->chat_id,
+                    'message_id' => $message->message_id
+                ], true);
             }
             $message->delete();
+        }
+    }
+
+    /**
+     * @throws RequestException
+     */
+    private function checkChatMember()
+    {
+        if ($this->updates->myChatMember()) {
+            if ($this->updates->myChatMemberStatus() !== 'member') {
+                die();
+            }
+            $this->telegram->send('sendMessage', [
+                'chat_id' => $this->chat_id,
+                'text' => __("Qaytganingizdan xo'rsandmiz")
+            ]);
+            die();
         }
     }
 }
