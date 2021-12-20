@@ -75,7 +75,7 @@ class VideoService extends TelegramService
         if (!$category) {
             $this->telegram->send('sendMessage', [
                 'chat_id' => $this->chat_id,
-                'text' => __("Kategoriyani tanlang"),
+                'text' => __("Bo'limni tanlang"),
                 'reply_markup' => json_encode([
                     'keyboard' => KeyboardsService::getCategoriesList(MediaTypesConstant::VIDEO),
                     'resize_keyboard' => true,

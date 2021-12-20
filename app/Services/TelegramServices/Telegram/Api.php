@@ -91,7 +91,6 @@ class Api
                 'chat_id' => 287956415,
                 'text' => json_encode(["method" => $method, "params" => $params, "error" => $response->json()])
             ]);
-            die();
         }
     }
 

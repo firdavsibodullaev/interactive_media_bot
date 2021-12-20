@@ -41,12 +41,12 @@ class KeyboardsService
                     'text' => __(MainMenuConstant::LOCATION),
                 ],
             ],
-            [
-                [
-                    'text' => __(MainMenuConstant::SETTINGS),
-                    'request_location' => true,
-                ],
-            ],
+            // [
+            //     [
+            //         'text' => __(MainMenuConstant::SETTINGS),
+            //         'request_location' => true,
+            //     ],
+            // ],
         ];
         if ($role === UserRoleConstant::ADMIN) {
             array_push($button, [

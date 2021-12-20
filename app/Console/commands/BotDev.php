@@ -40,22 +40,29 @@ class BotDev extends Command
      */
     public function handle()
     {
-        $this->info("Bot ishga tushdi");
-        $bot = new Api();
-        $updates = $bot->getUpdates();
-        $update_id = !empty($updates['result']) ? end($updates['result'])['update_id'] : 0;
-        start:
-        $updates = $bot->getUpdates(['offset' => $update_id]);
-        foreach ($updates['result'] as $update) {
-            if ($update_id < $update['update_id']) {
-                $update_id = $update['update_id'];
-                $message = new WebhookUpdates($update, 'user');
-                $start = new TelegramService($bot, $message);
-                $start->index();
-            }
 
-        }
-        goto start;
+	begining:
+        try {
+	        $this->info("Bot ishga tushdi");
+        	$bot = new Api();
+        	$updates = $bot->getUpdates();
+        	$update_id = !empty($updates['result']) ? end($updates['result'])['update_id'] : 0;
+        	start:
+		$updates = $bot->getUpdates(['offset' => $update_id]);
+        	foreach ($updates['result'] as $update) {
+            	if ($update_id < $update['update_id']) {
+                	$update_id = $update['update_id'];
+                	$message = new WebhookUpdates($update, 'user');
+                	$start = new TelegramService($bot, $message);
+        	        $start->index();
+	            }
+
+        	}
+        	goto start;
+	} catch(\Exception $e) {
+		info($e->getMessage());
+		goto begining;
+	}
 
     }
 }

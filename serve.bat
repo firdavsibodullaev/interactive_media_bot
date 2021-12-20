@@ -1,1 +1,1 @@
-php artisan serve
+php artisan bot:run

@@ -56,7 +56,7 @@ class VideoSettingsService extends TelegramService
 
         $this->telegram->send('sendMessage', [
             'chat_id' => $this->chat_id,
-            'text' => __('Kategoriyani tanlang'),
+            'text' => __('Bo\'limni tanlang'),
             'reply_markup' => json_encode([
                 'keyboard' => KeyboardsService::getCategoriesList(),
                 'resize_keyboard' => true
@@ -77,7 +77,7 @@ class VideoSettingsService extends TelegramService
         if (!$category) {
             $this->telegram->send('sendMessage', [
                 'chat_id' => $this->chat_id,
-                'text' => __('Kategoriyani tanlang')
+                'text' => __('Bo\'limni tanlang')
             ]);
             return;
         }
