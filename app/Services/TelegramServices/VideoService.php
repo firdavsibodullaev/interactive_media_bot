@@ -62,7 +62,7 @@ class VideoService extends TelegramService
     {
         if ($this->updates->callbackQuery()) {
             $this->getMedia();
-            die();
+            return;
         }
         if ($this->text === __(ControlActionsConstant::BACK)) {
             $this->sendMainMenu();

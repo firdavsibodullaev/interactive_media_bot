@@ -62,9 +62,19 @@ class Api
         return new WebhookUpdates(json_decode(file_get_contents('php://input'), true), $this->bot_type);
     }
 
+    public function getUpdates(array $params = [])
+    {
+        $response = Http::get(str_replace('{method}', 'getUpdates', $this->url), $params);
+        if ($response->ok()) {
+            return $response->json();
+        }
+        return $response->json();
+    }
+
     /**
      * @param string $method
      * @param array $params
+     * @param bool $with_errors
      * @return Response|array
      * @throws RequestException
      */
