@@ -60,14 +60,16 @@ class PhotoService extends TelegramService
      */
     public function getMediaCategory()
     {
-        if ($this->updates->callbackQuery()) {
-            $this->getMedia();
-            die();
-        }
         if ($this->text === __(ControlActionsConstant::BACK)) {
             $this->sendMainMenu();
             return;
         }
+
+        if ($this->updates->callbackQuery()) {
+            $this->getMedia();
+            return;
+        }
+
         $category = Category::query()
             ->where('type', '=', MediaTypesConstant::IMAGE)
             ->where("name_" . app()->getLocale(), '=', $this->text)

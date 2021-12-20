@@ -62,7 +62,10 @@ class TelegramService
      */
     public function index()
     {
-        $this->checkChatMember();
+        if ($this->updates->myChatMember()) {
+            $this->checkChatMember();
+            return;
+        }
         if ($this->bot_user->role === UserRoleConstant::ADMIN) {
             (new AdminActionService($this->telegram, $this->updates))->index();
         } else {
@@ -184,15 +187,13 @@ class TelegramService
      */
     private function checkChatMember()
     {
-        if ($this->updates->myChatMember()) {
-            if ($this->updates->myChatMemberStatus() !== 'member') {
-                die();
-            }
-            $this->telegram->send('sendMessage', [
-                'chat_id' => $this->chat_id,
-                'text' => __("Qaytganingizdan xo'rsandmiz")
-            ]);
-            die();
+        if ($this->updates->myChatMemberStatus() !== 'member') {
+            return;
         }
+        $this->telegram->send('sendMessage', [
+            'chat_id' => $this->chat_id,
+            'text' => __("Qaytganingizdan xo'rsandmiz")
+        ]);
+
     }
 }
