@@ -65,10 +65,16 @@ class VideoSettingsService extends TelegramService
     }
 
     /**
+     * @var bool $is_back
      * @throws RequestException
      */
     public function getMediaCategory()
     {
+        if ($this->text === __(ControlActionsConstant::BACK)) {
+            $this->controlMainMenu();
+            return;
+        }
+
         $category = Category::query()
             ->where('type', '=', MediaTypesConstant::VIDEO)
             ->where("name_" . app()->getLocale(), '=', $this->text)
@@ -94,7 +100,6 @@ class VideoSettingsService extends TelegramService
                 'resize_keyboard' => true
             ])
         ]);
-
         $this->action->sub_action = SubactionsService::GET_MEDIA;
         $this->action->save();
 
@@ -106,7 +111,7 @@ class VideoSettingsService extends TelegramService
     public function getMedia()
     {
         if ($this->text === __(ControlActionsConstant::BACK)) {
-            $this->controlMainMenu();
+            $this->getButtons();
             return;
         }
         $file = $this->updates->getFile();

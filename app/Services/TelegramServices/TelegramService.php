@@ -76,7 +76,7 @@ class TelegramService
     /**
      * @return BotUser
      */
-    private function getBotUser(): BotUser
+    protected function getBotUser(): BotUser
     {
         /** @var BotUser $bot_user */
         $bot_user = BotUser::query()->firstOrCreate([

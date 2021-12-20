@@ -181,7 +181,7 @@ class KeyboardsService
             ],
             [
                 [
-                    'text' => ControlActionsConstant::BACK,
+                    'text' => __(ControlActionsConstant::BACK),
                 ]
             ]
         ];

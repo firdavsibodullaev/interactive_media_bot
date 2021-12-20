@@ -69,6 +69,10 @@ class PhotoSettingsService extends TelegramService
      */
     public function getMediaCategory()
     {
+        if ($this->text === __(ControlActionsConstant::BACK)) {
+            $this->controlMainMenu();
+            return;
+        }
         $category = Category::query()
             ->where('type', '=', MediaTypesConstant::IMAGE)
             ->where("name_" . app()->getLocale(), '=', $this->text)
@@ -106,7 +110,7 @@ class PhotoSettingsService extends TelegramService
     public function getMedia()
     {
         if ($this->text === __(ControlActionsConstant::BACK)) {
-            $this->controlMainMenu();
+            $this->getButtons();
             return;
         }
         $file = $this->updates->getFile();
